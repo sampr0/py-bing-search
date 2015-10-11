@@ -2,6 +2,7 @@ import urllib2
 import requests
 import pdb
 import time
+from urllib import urlencode
 
 class PyBingException(Exception):
     pass
@@ -10,8 +11,8 @@ class PyBingSearch(object):
 
     #QUERY_URL = 'https://api.datamarket.azure.com/Bing/Search/v1/Composite' \
     #             + '?Sources={}&Query={}&$top={}&$skip={}&$format={}'
-    QUERY_URL = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web' \
-                 + '?Query={}&$top={}&$skip={}&$format={}'
+    #QUERY_URL = 'https://api.datamarket.azure.com/Bing/SearchWeb/v1/Web' \
+    #             + '?Query={}&$top={}&$skip={}&$format={}'
 
     def __init__(self, api_key, safe=False):
         self.api_key = api_key
@@ -32,8 +33,11 @@ class PyBingSearch(object):
         '''
         Returns a list of result objects, with the url for the next page bing search url.
         '''
-        url = self.QUERY_URL.format(urllib2.quote("'{}'".format(query)), limit, offset, format)
-        r = requests.get(url, auth=("", self.api_key))
+        #print "'{}'".format(query)
+        #print urllib2.quote("'{}'".format(query))
+        url = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/v1/Web?Query=%27" + query + "%27&$format=json"
+        #print url
+        r = requests.get(url, auth=(self.api_key,self.api_key))
         try:
             json_results = r.json()
         except ValueError as vE:
