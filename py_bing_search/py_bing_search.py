@@ -36,7 +36,7 @@ class PyBingSearch(object):
         #print "'{}'".format(query)
         #print urllib2.quote("'{}'".format(query))
         url = "https://api.datamarket.azure.com/Data.ashx/Bing/Search/v1/Web?Query=%27" + query + "%27&$format=json"
-        print url
+        #print url
         r = requests.get(url, auth=(self.api_key,self.api_key))
         try:
             json_results = r.json()
